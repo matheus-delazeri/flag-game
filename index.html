@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Colorless Flag Game</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h1 class="text-center">Colorless Flag Game</h1>
+    <div class="row justify-content-center mt-5">
+      <div class="flag" id="flag">
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <p>
+        Make a guess to start revealing the flag.
+      </p>
+    </div>
+    <form class="form row justify-content-center" id="form" onkeypress="submit">
+      <input class="input" type="text" id="input" placeholder="Enter your guess">
+    </form>
+  </body>
+</html>
