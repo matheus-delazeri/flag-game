@@ -7,9 +7,24 @@ body
     padding: 0;
 }
 
+.attempt p
+{
+    color: rgb(0, 0, 0);
+    font-size: 30px;
+    text-align: center;
+}
+
+.attempt
+{
+    background-color: rgba(255, 0, 0, 0.137);
+    margin: auto;
+    width: 500px;
+    border-radius: 5px;
+}
+
 .input
 {
-    width: 250px;
+    width: 400px;
     height: 40px;
     border-radius: 4px;
     border-color: black;
@@ -22,10 +37,11 @@ body
 
 .flag 
 {
-    width: 400px;
+    width: auto;
     height: auto;
     border-color: black;
     border: 10px;
+    border-style: solid;
     margin: auto;
 }
 
@@ -34,4 +50,21 @@ body
     width: 100%;
     height: auto;
     margin: auto;
+}
+
+#suggestions {
+    border: 3px solid #000000;
+    max-height: 200px;
+    width: 400px;
+    margin: auto;
+    overflow-y: auto;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+#suggestions div {
+    padding: 5px;
+    cursor: pointer;
+}
+#suggestions div:hover {
+    background-color: #f0f0f0;
 }
