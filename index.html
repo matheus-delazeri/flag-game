@@ -8,10 +8,11 @@
     <script src="script.js"></script>
   </head>
   <body>
-    <h1 class="text-center">Colorless Flag Game</h1>
+    <h1 class="text-center">Guess The Country</h1>
     <div class="country-name"></div>
     <div class="row justify-content-center mt-5">
       <div class="flag" id="flag">
+
       </div>
     </div>
     <div class="row justify-content-center">
@@ -20,12 +21,25 @@
       </p>
     </div>
     <form class="form text-center" id="form" onkeypress="submit">
-      <input class="input" type="text" id="input" placeholder="Enter your guess" oninput="onInputChange()">
+      <div class="input-container">
+        <input class="input" type="text" id="input" placeholder="Enter your guess" oninput="onInputChange()">
+        <!-- Adding a button next to the input -->
+        <button type="button" class="reload-button" onclick="window.location.reload()">
+          <p>New Country &#x21BB; </p>
+        </button>
+      </div>
       <div id="suggestions" onclick="onInputChange()"></div>
     </form>
+    
 
-    <div id="attempts" class="text-center mt-5">
-      <h3>Attempts: 0/5</h3>
+    <div class="row justify-content-center mt-5">
+      <div id="attempts" class="col text-center mt-5">
+        <h3>Attempts: 0/5</h3>
+      </div>
+      <div id="tips" class="col text-center mt-5 tips">
+        <h3>Tips: 0/4</h3>
+      </div>
+      
     </div>
   </body>
 </html>

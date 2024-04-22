@@ -22,12 +22,53 @@ body
     border-radius: 5px;
 }
 
+.tip
+{
+    background-color: rgba(0, 255, 149, 0.137);
+    margin: auto;
+    width: 500px;
+    border-radius: 5px;
+}
+
+.tip p
+{
+    color: rgb(0, 0, 0);
+    font-size: 30px;
+    text-align: center;
+}
+
 .input
 {
     width: 400px;
     height: 40px;
     border-radius: 4px;
     border-color: black;
+}
+
+.reload-button
+{
+    width: auto;
+    height: 39px;
+    border-radius: 4px;
+    border-color: black;
+    background-color: rgb(142, 151, 150);
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    margin-bottom: 5px;
+    margin: 0%;
+}
+
+.reload-button:hover
+{
+    background-color: rgb(104, 104, 104);
+}
+
+.reload-button p 
+{
+    color: black;
+    font-size: 20px;
+    text-align: center;
+    margin: 0px;
 }
 
 .form
@@ -37,19 +78,22 @@ body
 
 .flag 
 {
-    width: auto;
-    height: auto;
+    width: fit-content;
+    height: fit-content;
     border-color: black;
-    border: 10px;
-    border-style: solid;
-    margin: auto;
+    border: 8px;
+    border-style:solid;
+    margin: 0px;
+    padding: auto;
+    
 }
 
 .flag svg
 {
     width: 100%;
-    height: auto;
-    margin: auto;
+    height: 100%;
+    /* STONKS 5HEAD */
+    margin-bottom: -6px;
 }
 
 #suggestions {
@@ -60,10 +104,15 @@ body
     overflow-y: auto;
     margin-top: 5px;
     border-radius: 5px;
+    background-color: #ffffff;
+    z-index: 100;
 }
 #suggestions div {
     padding: 5px;
     cursor: pointer;
+    display: block;
+    overflow-y: inherit;
+
 }
 #suggestions div:hover {
     background-color: #f0f0f0;

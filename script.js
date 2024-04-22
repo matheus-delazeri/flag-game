@@ -1,35 +1,34 @@
-var flag = null;
-var flagDiv = null;
-var tempFlag = null;
-var num_colors_to_erase = 0;
-var last_attempt = "";
-var num_attempts = 0;
-var max_num_attempts = 5;
-var right_country = "";
-// List of country names for suggestions
-var countries = null;
+var originalFlag = null;
+var erasedFlag = null;
+var answer = "";
 
 $(document).ready(function () {
-    $.get("https://flags-api-8ul8.onrender.com/random", async function (data, status) {
-        flagDiv = document.getElementById("flag");
-        flag_url = data.flag;
-        console.log(flag_url);
+    $.get("https://flags-api-8ul8.onrender.com/random", async function (data, status) 
+    {
+        LoadTips(data);
+        SetFirstGameStatus();
         
         //acess the url and get the svg data
+        flag_url = data.flag;
         await $.get(flag_url, async function (flag_data, status) 
         {
-            flag = await flag_data.getElementsByTagName("svg")[0];
-            right_country = await data.name;
+            originalFlag = await flag_data.getElementsByTagName("svg")[0];
+            answer = await data.name;
         });
 
-        await $.get("https://flags-api-8ul8.onrender.com/names", async function (country_data, status) 
-        {
-            countries = await country_data;
-        }); 
-
-        console.log(flag);
-        EraseFlagColors(num_colors_to_erase);
+        //erase the flag to start the game
+        EraseFlagColors(attempts);
     });
+});
+
+//load all countries names to suggestions
+$(document).ready(function () 
+{
+    $.get("https://flags-api-8ul8.onrender.com/names", function (country_data, status) 
+    {
+        suggestions = country_data;
+        localStorage.setItem("suggestions", JSON.stringify(suggestions));
+    }); 
 });
 
 $(function () {
@@ -41,85 +40,108 @@ $(function () {
 $(function () {
     $("form").submit(function (e) {
         e.preventDefault();
-        var value = $("#input").val();
-        last_attempt = value;
+        var guess = $("#input").val();
 
-        UpdateFlag();
+        SubmitGuess(guess);
     });
 })
 
-function UpdateFlag() 
+function LoadTips(jsonData)
 {
-    if (last_attempt.toLowerCase() == right_country.toLowerCase())
+    tips[0] = "Continent: " + jsonData.continente;
+    tips[1] = "Capital: " + jsonData.capital;
+    tips[2] = "Language: " + Object.values(jsonData.lingua);
+    tips[3] = " ";
+    tips[4] = " ";
+
+    localStorage.setItem("tips", JSON.stringify(tips));
+}
+
+function SetFirstGameStatus()
+{
+    var attempts = 0;
+    var maxAttempts = 5;
+
+    localStorage.setItem("attempts", attempts);
+    localStorage.setItem("maxAttempts", maxAttempts);
+}
+
+function SubmitGuess(guess) 
+{
+    var attempts = localStorage.getItem("attempts");
+    var maxAttempts = localStorage.getItem("maxAttempts");
+
+    if (guess.toLowerCase() == answer.toLowerCase())
     {
         alert("Congratulations! You guessed the right country!");
-        num_colors_to_erase = 10;
+        EraseFlagColors(16);
     }
     else
     {
-        num_attempts++;
+        attempts++;
+        localStorage.setItem("attempts", attempts);
+        EraseFlagColors(attempts);
+        UpdateAttempts(guess);
+        UpdateTips();
     }
 
-    if (num_attempts >= max_num_attempts)
+    if (attempts >= maxAttempts)
     {
-        alert("You have reached the maximum number of attempts. The right country was: " + right_country);
-        num_colors_to_erase = 10;
+        alert("You have reached the maximum number of attempts. The right country was: " + answer);
+        EraseFlagColors(16)
     }
-    num_colors_to_erase++;
-    EraseFlagColors(num_colors_to_erase);
-    AppendAttemptsToHTML();
+
+    localStorage.setItem("attempts", attempts);
 }
 
-
-
-function AppendAttemptsToHTML() 
+function UpdateAttempts(attempt) 
 {
+    var attempts = localStorage.getItem("attempts");
+    
+    //update text
     var attemptsDiv = document.getElementById("attempts");
     var text_num_attempts = attemptsDiv.getElementsByTagName("h3");
-    text_num_attempts[0].innerHTML = "Attempts: " + num_attempts + "/ 5";
+    text_num_attempts[0].innerHTML = "Attempts: " + attempts + "/ 5";
 
-
+    //add new attempt
     var newAttempt = document.createElement("div");
     var country = document.createElement("p");
-    country.innerHTML = last_attempt;
-    //add attempt class to newAttempt
+    country.innerHTML = attempt;
+    
     newAttempt.className = "attempt";
     newAttempt.appendChild(country);
     attemptsDiv.appendChild(newAttempt);
 }
 
-function EraseElements(num_el) {
-    tempFlag = flag.cloneNode(true);
+function UpdateTips()
+{
+    var attempts = localStorage.getItem("attempts");
 
-    //get all elements
-    var childs = tempFlag.children;
+    //update text
+    var tipsDiv = document.getElementById("tips");
+    var text_num_tips = tipsDiv.getElementsByTagName("h3");
+    text_num_tips[0].innerHTML = "Tips: " + attempts + "/ 4";
 
-    //remove all childs
-    for (var i = num_el; i < childs.length; i++) {
-        tempFlag.removeChild(childs[i]);
-    }
-
-    flagDiv.removeChild(flagDiv.firstChild);
-    flagDiv.appendChild(tempFlag);
-
+    //add new tip
+    var tips = JSON.parse(localStorage.getItem("tips"));
+    var newTip = document.createElement("div");
+    var tip = document.createElement("p");
+    tip.innerHTML = tips[attempts - 1];
+    
+    newTip.className = "tip";
+    newTip.appendChild(tip);
+    tipsDiv.appendChild(newTip);
 }
 
 function EraseFlagColors(num_colors) {
-    tempFlag = flag.cloneNode(true);
-    /*  
-      var paths = tempFlag.querySelectorAll("[fill]:not([fill='transparent']):not([fill='white']):not([fill='#fff']):not([fill='#FFF'])");
-  
-      for(var i = num_colors; i < paths.length; i++)
-      {
-          paths[i].setAttribute("fill", "white");
-      }
-  */
+    erasedFlag = originalFlag.cloneNode(true);
 
-    newFlag = EraseColors(new XMLSerializer().serializeToString(tempFlag), num_colors);
-    tempFlag = new DOMParser().parseFromString(newFlag, "image/svg+xml").getElementsByTagName("svg")[0];
+    newFlag = EraseColors(new XMLSerializer().serializeToString(erasedFlag), num_colors);
+    erasedFlag = new DOMParser().parseFromString(newFlag, "image/svg+xml").getElementsByTagName("svg")[0];
 
+    flagDiv = document.getElementById("flag");
     flagDiv.removeChild(flagDiv.firstChild);
-    flagDiv.appendChild(tempFlag);
+    flagDiv.appendChild(erasedFlag);
 }
 
 function EraseColors(rawflag, not_erase_num) {
@@ -170,6 +192,7 @@ function onInputChange() {
     suggestions.innerHTML = "";
 
     // Filter country names based on input
+    const countries = JSON.parse(localStorage.getItem("suggestions"));
     const filteredCountries = countries.filter(country => country.toLowerCase().startsWith(query));
 
     // Display filtered countries
@@ -179,9 +202,7 @@ function onInputChange() {
         suggestion.onclick = () => {
             input.value = country;
             suggestions.innerHTML = "";
-
-            last_attempt = country;
-            UpdateFlag();
+            SubmitGuess(country);
         };
         suggestions.appendChild(suggestion);
     });
