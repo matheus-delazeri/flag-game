@@ -51,7 +51,7 @@ function LoadTips(jsonData)
     tips[0] = "Continent: " + jsonData.continente;
     tips[1] = "Capital: " + jsonData.capital;
     tips[2] = "Language: " + Object.values(jsonData.lingua);
-    tips[3] = " ";
+    tips[3] = "Currency: " + jsonData.moeda;
     tips[4] = " ";
 
     localStorage.setItem("tips", JSON.stringify(tips));
@@ -74,6 +74,7 @@ function SubmitGuess(guess)
     if (guess.toLowerCase() == answer.toLowerCase())
     {
         alert("Congratulations! You guessed the right country!");
+        ShowRightCountry()
         EraseFlagColors(16);
     }
     else
@@ -89,6 +90,7 @@ function SubmitGuess(guess)
     {
         alert("You have reached the maximum number of attempts. The right country was: " + answer);
         EraseFlagColors(16)
+        ShowRightCountry();
     }
 
     localStorage.setItem("attempts", attempts);
@@ -117,6 +119,11 @@ function UpdateTips()
 {
     var attempts = localStorage.getItem("attempts");
 
+    if (attempts > 4)
+    {
+        return;
+    }
+
     //update text
     var tipsDiv = document.getElementById("tips");
     var text_num_tips = tipsDiv.getElementsByTagName("h3");
@@ -131,6 +138,23 @@ function UpdateTips()
     newTip.className = "tip";
     newTip.appendChild(tip);
     tipsDiv.appendChild(newTip);
+}
+
+function ShowRightCountry()
+{
+    var h1 = document.getElementById("guess");
+    h1.innerHTML = answer;
+
+    var attempts = localStorage.getItem("attempts");
+
+    if(attempts >= 5)
+    {
+        h1.style.color = "red";
+    }
+    else
+    {
+        h1.style.color = "green";
+    }
 }
 
 function EraseFlagColors(num_colors) {
