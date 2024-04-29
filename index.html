@@ -1,46 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Flag Game</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="script.js"></script>
-  </head>
-  <body>
-    <h1 id="guess" class="text-center">Guess The Country</h1>
-    <div class="country-name"></div>
-    <div class="row justify-content-center mt-5">
-      <div class="flag" id="flag">
 
-      </div>
-    </div>
-    <div class="row justify-content-center">
-      <p>
-        Make a guess to start revealing the flag.
-      </p>
-    </div>
+<head>
+  <title>Flag Game</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="script.js"></script>
+</head>
 
-    <form class="form text-center" id="form" onkeypress="submit">
-      <div class="input-container">
-        <input class="input" type="text" id="input" placeholder="Enter your guess" oninput="onInputChange()">
-        <!-- Adding a button next to the input -->
-        <button type="button" class="reload-button" onclick="window.location.reload()">
-          <p>New Country &#x21BB; </p>
-        </button>
+<body>
+  <div class="content row">
+    <div class="col-2"></div>
+    <div class="col-6 guess-container">
+      <h1 id="guess" class="text-center">Guess The Country <img width="75px" id="loader" src="loader.gif" alt="Loading..." style="display: none;"></h1>
+      <div class="country-name"></div>
+      <div class="row justify-content-center mt-5">
+        <div class="flag" id="flag">
+        </div>
       </div>
-      <div id="suggestions" onclick="onInputChange()"></div>
-    </form>
-    
-  <div class="info-container">
-    <div class="row justify-content-center mt-5">
-      <div id="attempts" class="col text-center mt-5">
-        <h3>Attempts: 0/5</h3>
+      <div class="row justify-content-center">
+        <p>
+          Make a guess to start revealing the flag.
+        </p>
       </div>
-      <div id="tips" class="col text-center mt-5 tips">
-        <h3>Tips: 0/4</h3>
+
+      <form class="form text-center" id="form" onkeypress="submit">
+        <div class="input-container">
+          <input class="input" type="text" id="input" placeholder="Enter your guess" oninput="onInputChange()">
+          <!-- Adding a button next to the input -->
+          <button type="button" class="reload-button" onclick="window.location.reload()">
+            <p>New Country &#x21BB; </p>
+          </button>
+        </div>
+        <div id="suggestions" onclick="onInputChange()"></div>
+      </form>
+    </div>
+    <div class="col-2 info-container">
+      <div class="justify-content-center">
+        <div id="attempts" class="text-center">
+          <h3>Attempts: 0/5</h3>
+        </div>
+        <hr>
+        <div id="tips" class="text-center tips">
+          <h3>Tips: 0/4</h3>
+        </div>
       </div>
     </div>
-  </div> 
-  </body>
+    <div class="col-2"></div>
+</body>
+
 </html>

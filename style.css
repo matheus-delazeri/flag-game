@@ -1,44 +1,51 @@
-body
-{
+body {
     background-color: #000000;
     color: black;
     font-family: Arial, sans-serif;
-    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     padding: 0;
 }
 
-.attempt p
-{
+.content {
+    width: 100%;
+    height: max-content;
+}
+
+#loader {
+    margin: auto;
+    padding: 2%;
+}
+
+.attempt p {
     color: rgb(0, 0, 0);
-    font-size: 30px;
+    font-size: 1.25rem;
     text-align: center;
 }
 
-.attempt
-{
+.attempt {
     background-color: rgba(255, 0, 0, 0.137);
     margin: auto;
-    width: 500px;
+    width: 250px;
     border-radius: 5px;
 }
 
-.tip
-{
+.tip {
     background-color: rgba(0, 255, 149, 0.137);
     margin: auto;
-    width: 500px;
+    width: 250px;
     border-radius: 5px;
 }
 
-.tip p
-{
+.tip p {
     color: rgb(0, 0, 0);
-    font-size: 30px;
+    font-size: 1.25rem;
     text-align: center;
 }
 
-.input
-{
+.input {
     width: 400px;
     height: 50px;
     border-radius: 4px;
@@ -48,21 +55,17 @@ body
     background-color: rgb(255, 255, 255);
 }
 
-.input-container
-{
+.input-container {
     margin: auto;
     width: fit-content;
-
 }
 
-.form
-{
+.form {
     position: sticky;
     width: 100%;
 }
 
-.reload-button
-{
+.reload-button {
     width: auto;
     height: 49px;
     border-radius: 4px;
@@ -76,43 +79,35 @@ body
     margin: 0%;
 }
 
-.reload-button:hover
-{
+.reload-button:hover {
     background-color: rgb(104, 104, 104);
 }
 
-.reload-button p 
-{
+.reload-button p {
     color: black;
     font-size: 20px;
     text-align: center;
     margin: 0px;
 }
 
-.flag 
-{
-    width: fit-content;
-    height: fit-content;
+.flag {
     border-color: black;
     border: 8px;
-    border-style:solid;
+    border-style: solid;
     margin: 0px;
     padding: auto;
-    
 }
 
-.flag svg
-{
+.flag svg {
     width: 100%;
     height: 100%;
     /* STONKS 5HEAD */
     margin-bottom: -6px;
 }
 
-.info-container
-{
+.info-container {
     max-width: 1280px;
-    margin:auto;
+    margin: auto;
 }
 
 #suggestions {
@@ -127,6 +122,7 @@ body
     background-color: #ffffff;
     z-index: 100;
 }
+
 #suggestions div {
     padding: 5px;
     width: 100%;
@@ -135,6 +131,7 @@ body
     overflow-y: inherit;
 
 }
+
 #suggestions div:hover {
     background-color: #f0f0f0;
 }
